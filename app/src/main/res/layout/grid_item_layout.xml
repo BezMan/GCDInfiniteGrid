@@ -3,16 +3,16 @@
 
     android:id="@+id/item_frame"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/colorAccent">
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@drawable/border">
 
     <TextView
         android:id="@+id/item_text"
-        android:text="123"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_gravity="center"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="1dp"
+        android:gravity="center"
+        android:textSize="24sp" />
 
 </FrameLayout>

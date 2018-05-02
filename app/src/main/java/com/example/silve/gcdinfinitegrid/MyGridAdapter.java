@@ -1,5 +1,6 @@
 package com.example.silve.gcdinfinitegrid;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,12 +41,15 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
         GridItemModel itemModel = mItemList.get(position);
 
         TextView textView = viewHolder.numTextView;
-        textView.setText(String.valueOf(itemModel.getNum()));
+        int num = itemModel.getNum();
+        textView.setText(String.valueOf(num));
 
 
-        if (isPrime(2)) {
+        if (isPrime(num)) {
+            textView.setBackgroundColor(Color.RED);
         }
         else {
+//            textView.setBackgroundColor(Color.RED);
         }
     }
 
