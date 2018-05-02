@@ -48,7 +48,13 @@ public class MainActivity extends AppCompatActivity implements MyGridAdapter.Ite
 
     @Override
     public void onItemClick(View view, int id) {
-        Toast.makeText(this, "" + id, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "reg click " + id, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onItemLongClick(View view, int id) {
+        Toast.makeText(this, "long click " + id, Toast.LENGTH_SHORT).show();
 
     }
 }

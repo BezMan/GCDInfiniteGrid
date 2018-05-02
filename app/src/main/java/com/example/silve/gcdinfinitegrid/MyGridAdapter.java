@@ -67,8 +67,11 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int id);
+        void onItemLongClick(View view, int id);
+
+        void onItemClick(View view, int num);
     }
+
 
     //checks whether an int is prime or not.
     private boolean isPrime(int n) {
@@ -89,7 +92,7 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         TextView numTextView;
@@ -101,8 +104,11 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
             // to access the context from any ViewHolder instance.
             super(itemView);
             numTextView = itemView.findViewById(R.id.item_text);
+
             numTextView.setOnClickListener(this);
+            numTextView.setOnLongClickListener(this);
         }
+
 
         @Override
         public void onClick(View view) {
@@ -112,5 +118,16 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
             }
         }
 
+        @Override
+        public boolean onLongClick(View view) {
+            if (mClickListener != null) {
+                GridItemModel itemModel = mItemList.get(getAdapterPosition());
+                mClickListener.onItemLongClick(view, itemModel.getNum());
+            }
+            return true;
+        }
+
     }
+
+
 }
