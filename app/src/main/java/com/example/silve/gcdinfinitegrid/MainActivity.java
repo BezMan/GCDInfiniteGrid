@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity implements MyGridAdapter.Ite
 
         EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                List<GridItemModel> moreItems = GridItemModel.addItemsToList(20);
+            public void onLoadMore(/*int page, */ int totalItemsCount, RecyclerView view) {
+                List<GridItemModel> moreItems = GridItemModel.addItemsToList(10);
                 final int curSize = adapter.getItemCount();
                 allItems.addAll(moreItems);
 
@@ -67,7 +67,16 @@ public class MainActivity extends AppCompatActivity implements MyGridAdapter.Ite
     public void onItemLongClick(View view, int id) {
         Toast.makeText(this, "long click " + id, Toast.LENGTH_SHORT).show();
 
-        switchClickMode(true);
+        if (isLongClicked) {//another longclick straight after longclick
+            switchClickMode(false); //must clear back UI regardless
+
+            if (numLongClicked != id) {//another longclick straight after longclick
+                numLongClicked = id;
+                switchClickMode(true);
+            }
+        }
+
+
 
     }
 
@@ -75,12 +84,6 @@ public class MainActivity extends AppCompatActivity implements MyGridAdapter.Ite
     private void switchClickMode(boolean gotoLongClickMode) {
         isLongClicked = gotoLongClickMode;
         adapter = new MyGridAdapter(allItems, isLongClicked, numLongClicked);
-
-//        recyclerView.setAdapter(null);
-//        recyclerView.setLayoutManager(null);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(gridLayoutManager);
-//        adapter.notifyDataSetChanged();
 
         recyclerView.swapAdapter(adapter, false);
         recyclerView.setLayoutManager(gridLayoutManager);
