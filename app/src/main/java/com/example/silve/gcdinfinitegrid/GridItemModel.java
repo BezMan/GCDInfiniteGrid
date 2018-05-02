@@ -4,20 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GridItemModel {
-    private String mName;
-    private boolean primeNum;
+    private int mNum;
 
-    public GridItemModel(String name, boolean pNum) {
-        mName = name;
-        primeNum = pNum;
+    public GridItemModel(int num) {
+        mNum = num;
     }
 
-    public String getName() {
-        return mName;
-    }
-
-    public boolean isPrimeNum() {
-        return primeNum;
+    public int getNum() {
+        return mNum;
     }
 
     private static int lastItemId = 0;
@@ -26,7 +20,7 @@ public class GridItemModel {
         List<GridItemModel> itemList = new ArrayList<GridItemModel>();
 
         for (int i = 1; i <= numItems; i++) {
-            itemList.add(new GridItemModel("Person " + ++lastItemId, i <= numItems / 2));
+            itemList.add(new GridItemModel(++lastItemId));
         }
 
         return itemList;

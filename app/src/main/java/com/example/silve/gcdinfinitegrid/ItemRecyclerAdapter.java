@@ -5,15 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
-public class ItemRecyclerAdapter extends
-        RecyclerView.Adapter<ItemRecyclerAdapter.ViewHolder> {
+public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapter.ViewHolder> {
 
     // Store a member variable for the items
     private List<GridItemModel> mItemList;
@@ -29,7 +27,6 @@ public class ItemRecyclerAdapter extends
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView numTextView;
-        public FrameLayout frameLayout;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -39,7 +36,6 @@ public class ItemRecyclerAdapter extends
             super(itemView);
 
             numTextView = (TextView) itemView.findViewById(R.id.item_text);
-            frameLayout = (FrameLayout) itemView.findViewById(R.id.item_frame);
         }
     }
 
@@ -59,24 +55,30 @@ public class ItemRecyclerAdapter extends
         GridItemModel itemModel = mItemList.get(position);
 
         TextView textView = viewHolder.numTextView;
-        textView.setText(itemModel.getName());
+        textView.setText(Integer.toString(itemModel.getNum()));
 
-        FrameLayout frameLayout = viewHolder.frameLayout;
 
-        if (itemModel.isPrimeNum()) {
-            frameLayout.getResources().getColor(R.color.colorPrimary);
-//            button.setText("Message");
-//            button.setEnabled(true);
+        if (isPrime(2)) {
         }
         else {
-            frameLayout.getResources().getColor(R.color.colorPrimaryDark);
-//            button.setText("Offline");
-//            button.setEnabled(false);
         }
     }
 
     @Override
     public int getItemCount() {
         return mItemList.size();
+    }
+
+
+    //checks whether an int is prime or not.
+    boolean isPrime(int n) {
+        //check if n is a multiple of 2
+        if (n%2==0) return false;
+        //if not, then just check the odds
+        for(int i=3;i*i<=n;i+=2) {
+            if(n%i==0)
+                return false;
+        }
+        return true;
     }
 }
