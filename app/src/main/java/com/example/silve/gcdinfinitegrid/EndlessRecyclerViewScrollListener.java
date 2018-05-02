@@ -20,21 +20,21 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 
     RecyclerView.LayoutManager mLayoutManager;
 
-    public EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager) {
+    EndlessRecyclerViewScrollListener(LinearLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
     }
 
-    public EndlessRecyclerViewScrollListener(GridLayoutManager layoutManager) {
-        this.mLayoutManager = layoutManager;
-        visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
-    }
+//    public EndlessRecyclerViewScrollListener(GridLayoutManager layoutManager) {
+//        this.mLayoutManager = layoutManager;
+//        visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
+//    }
+//
+//    public EndlessRecyclerViewScrollListener(StaggeredGridLayoutManager layoutManager) {
+//        this.mLayoutManager = layoutManager;
+//        visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
+//    }
 
-    public EndlessRecyclerViewScrollListener(StaggeredGridLayoutManager layoutManager) {
-        this.mLayoutManager = layoutManager;
-        visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
-    }
-
-    public int getLastVisibleItem(int[] lastVisibleItemPositions) {
+    private int getLastVisibleItem(int[] lastVisibleItemPositions) {
         int maxSize = 0;
         for (int i = 0; i < lastVisibleItemPositions.length; i++) {
             if (i == 0) {
@@ -84,12 +84,12 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         }
     }
 
-    // Call whenever performing new searches
-    public void resetState() {
-        this.currentPage = this.startingPageIndex;
-        this.previousTotalItemCount = 0;
-        this.loading = true;
-    }
+//    // Call whenever performing new searches
+//    public void resetState() {
+//        this.currentPage = this.startingPageIndex;
+//        this.previousTotalItemCount = 0;
+//        this.loading = true;
+//    }
 
     // Defines the process for actually loading more data based on page
     public abstract void onLoadMore(int page, int totalItemsCount, RecyclerView view);

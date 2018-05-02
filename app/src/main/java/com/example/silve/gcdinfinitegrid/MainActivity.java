@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         final List<GridItemModel> allItems = GridItemModel.addItemsToList(40);
         final ItemRecyclerAdapter adapter = new ItemRecyclerAdapter(allItems);
