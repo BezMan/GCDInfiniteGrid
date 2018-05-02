@@ -1,6 +1,5 @@
 package com.example.silve.gcdinfinitegrid;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,25 +11,28 @@ import java.util.List;
 
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
-public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapter.ViewHolder> {
+public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder> {
 
     // Store a member variable for the items
     private List<GridItemModel> mItemList;
 
+    private ItemClickListener mClickListener;
+
     // Pass in the items array into the constructor
-    ItemRecyclerAdapter(List<GridItemModel> itemList) {
+    MyGridAdapter(List<GridItemModel> itemList) {
         mItemList = itemList;
+    }
+
+    // allows clicks events to be caught
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View itemView = inflater.inflate(R.layout.grid_item_layout, parent, false);
-
-        return new ViewHolder(itemView);
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.grid_item_layout, parent, false));
     }
 
     @Override
@@ -38,13 +40,18 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         GridItemModel itemModel = mItemList.get(position);
 
         TextView textView = viewHolder.numTextView;
-        textView.setText(Integer.toString(itemModel.getNum()));
+        textView.setText(String.valueOf(itemModel.getNum()));
 
 
         if (isPrime(2)) {
         }
         else {
         }
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int id);
     }
 
     //checks whether an int is prime or not.
@@ -66,7 +73,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         TextView numTextView;
@@ -77,8 +84,17 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-
             numTextView = itemView.findViewById(R.id.item_text);
+            numTextView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) {
+                GridItemModel itemModel = mItemList.get(getAdapterPosition());
+                mClickListener.onItemClick(view, itemModel.getNum());
+            }
+        }
+
     }
 }
