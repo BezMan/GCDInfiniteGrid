@@ -21,12 +21,24 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
 
     // Pass in the items array into the constructor
     MyGridAdapter(List<GridItemModel> itemList) {
+        setHasStableIds(true);
         mItemList = itemList;
     }
 
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
+    }
+
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @NonNull
