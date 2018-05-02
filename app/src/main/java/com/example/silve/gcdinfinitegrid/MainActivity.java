@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements MyGridAdapter.Ite
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        final List<GridItemModel> allItems = GridItemModel.addItemsToList(40);
+        final List<GridItemModel> allItems = GridItemModel.addItemsToList(50);
         final MyGridAdapter adapter = new MyGridAdapter(allItems);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, GRID_COLUMN_COUNT);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements MyGridAdapter.Ite
         EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                List<GridItemModel> moreItems = GridItemModel.addItemsToList(20);
+                List<GridItemModel> moreItems = GridItemModel.addItemsToList(50);
                 final int curSize = adapter.getItemCount();
                 allItems.addAll(moreItems);
 
