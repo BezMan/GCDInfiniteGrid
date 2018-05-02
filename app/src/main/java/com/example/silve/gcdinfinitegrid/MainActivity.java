@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements MyGridAdapter.Ite
         Toast.makeText(this, "reg click " + id, Toast.LENGTH_SHORT).show();
 
         if (isLongClicked) {
+            isLongClicked = false;
             switchClickMode(false);
         }
 
@@ -73,7 +74,13 @@ public class MainActivity extends AppCompatActivity implements MyGridAdapter.Ite
             if (numLongClicked != id) {//another longclick straight after longclick
                 numLongClicked = id;
                 switchClickMode(true);
+            } else {
+                isLongClicked = false;
             }
+        } else {
+            isLongClicked = true;
+            numLongClicked = id;
+            switchClickMode(true);
         }
 
 
@@ -82,8 +89,7 @@ public class MainActivity extends AppCompatActivity implements MyGridAdapter.Ite
 
 
     private void switchClickMode(boolean gotoLongClickMode) {
-        isLongClicked = gotoLongClickMode;
-        adapter = new MyGridAdapter(allItems, isLongClicked, numLongClicked);
+        adapter = new MyGridAdapter(allItems, gotoLongClickMode, numLongClicked);
 
         recyclerView.swapAdapter(adapter, false);
         recyclerView.setLayoutManager(gridLayoutManager);

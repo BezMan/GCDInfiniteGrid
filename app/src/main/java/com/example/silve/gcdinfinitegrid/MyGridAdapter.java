@@ -70,7 +70,6 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
         TextView textView = viewHolder.numTextView;
         int num = itemModel.getNum();
 
-//        Log.d("BEZ", "onBind: " + num);
         textView.setText(String.valueOf(num));
 
         if (mIsLongClicked) {
@@ -82,7 +81,6 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
         }
 
         if (isPrime(num)) {
-//            Log.d("BEZ", "isPrime: " + num);
             textView.setBackgroundColor(Color.RED);
 
         }
