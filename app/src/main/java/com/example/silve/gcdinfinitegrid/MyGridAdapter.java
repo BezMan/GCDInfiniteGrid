@@ -3,6 +3,7 @@ package com.example.silve.gcdinfinitegrid;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
 
     // Store a member variable for the items
     private List<GridItemModel> mItemList;
+    private boolean mIsLongClicked;
+    private int mNumLongClicked;
 
     private ItemClickListener mClickListener;
 
@@ -25,11 +28,23 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
         mItemList = itemList;
     }
 
+    public MyGridAdapter(List<GridItemModel> allItems, boolean isLongClicked, int numLongClicked) {
+        setHasStableIds(true);
+        mItemList = allItems;
+        mIsLongClicked = isLongClicked;
+        mNumLongClicked = numLongClicked;
+    }
+
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
+
+    @Override
+    public int getItemCount() {
+        return mItemList.size();
+    }
 
     @Override
     public long getItemId(int position) {
@@ -54,14 +69,13 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
 
         TextView textView = viewHolder.numTextView;
         int num = itemModel.getNum();
+
+        Log.d("BEZ", "onBind: " + num);
         textView.setText(String.valueOf(num));
 
-
         if (isPrime(num)) {
+            Log.d("BEZ", "isPrime: " + num);
             textView.setBackgroundColor(Color.RED);
-        }
-        else {
-//            textView.setBackgroundColor(Color.RED);
         }
     }
 
@@ -85,10 +99,12 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
         return true;
     }
 
-    @Override
-    public int getItemCount() {
-        return mItemList.size();
+
+    private int GCD(int a, int b) {
+        if (b == 0) return a;
+        return GCD(b, a % b);
     }
+
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -105,6 +121,7 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.ViewHolder
             super(itemView);
             numTextView = itemView.findViewById(R.id.item_text);
 
+            Log.d("BEZ", "setClickListeners: ");
             numTextView.setOnClickListener(this);
             numTextView.setOnLongClickListener(this);
         }
